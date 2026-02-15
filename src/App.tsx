@@ -8,13 +8,71 @@ import catResult from "./assets/cat_result.png";
 type Axis = "S" | "A" | "E";
 type ResultCode = "SAE" | "SAT" | "SCE" | "SCT" | "IAE" | "IAT" | "ICE" | "ICT";
 
+type Lang = "ko" | "th";
+const LANG_KEY = "catbti_lang";
+
+const uiText = {
+  ko: {
+    langBtnKo: "🇰🇷 한국어",
+    langBtnTh: "🇹🇭 ไทย",
+    brandLine: "CatBTI",
+    tagline: "우리 집 고양이의 속마음, 집사가 번역해보자 😼",
+    start: "테스트 시작하기",
+    shareBtn: "친구 집사에게 공유하기",
+    sharePreparing: "공유 준비 중...",
+    downloadBtn: "이미지로 저장하기",
+    downloadPreparing: "이미지 만드는 중...",
+    manualOpen: "▾ 우리 집 주인님 설명서 열기",
+    manualClose: "▴ 우리 집 주인님 설명서 접기",
+    retry: "다시 하기",
+    quizHint: "(선택하면 바로 다음 질문으로 넘어가요)",
+    shareText: "우리집 주인님의 MBTI가 궁금하다면 😼",
+    copiedLink: "공유 기능이 지원되지 않아 링크를 복사했어! 친구에게 붙여넣어 보내줘 😼",
+    shareFailed: "공유를 완료하지 못했어. (공유를 취소했거나, 기기에서 지원하지 않을 수 있어)",
+    saveFailed: "이미지 저장에 실패했어. (브라우저/확장 프로그램 영향일 수 있음)",
+    prev: "← 이전",
+    resultLabel: "CatBTI 결과",
+    traitSummary: "성향 요약",
+    butlerGuide: "🧭 집사 가이드",
+    caution: "⚠️ 주의 포인트",
+    footerShare: "catbti • 우리집 주인님의 MBTI가 궁금하다면 😼",
+  },
+  th: {
+    // ✅ 태국 밈 감성(ทาส=집사, เจ้านาย=주인님)
+    langBtnKo: "🇰🇷 한국어",
+    langBtnTh: "🇹🇭 ไทย",
+    brandLine: "CatBTI",
+    tagline: "อยากรู้ใจ ‘เจ้านาย’ ไหมทาส 😼",
+    start: "เริ่มทดสอบ",
+    shareBtn: "แชร์ให้เพื่อนทาส",
+    sharePreparing: "กำลังเตรียมแชร์...",
+    downloadBtn: "บันทึกเป็นรูปภาพ",
+    downloadPreparing: "กำลังสร้างรูป...",
+    manualOpen: "▾ เปิดคู่มือเจ้านายบ้านเรา",
+    manualClose: "▴ ปิดคู่มือเจ้านายบ้านเรา",
+    retry: "ทำอีกครั้ง",
+    quizHint: "(เลือกแล้วไปข้อถัดไปทันที)",
+    shareText: "อยากรู้ MBTI ของ ‘เจ้านาย’ ไหมทาส 😼",
+    copiedLink: "อุปกรณ์นี้แชร์ไฟล์ไม่ได้ เลยคัดลอกลิงก์ให้แล้วนะ! เอาไปวางส่งเพื่อนได้เลย 😼",
+    shareFailed: "แชร์ไม่สำเร็จ (อาจยกเลิกหรืออุปกรณ์ไม่รองรับ)",
+    saveFailed: "บันทึกรูปไม่สำเร็จ (อาจโดนส่วนเสริมหรือเบราว์เซอร์บล็อก)",
+    prev: "← ย้อนกลับ",
+    resultLabel: "ผลลัพธ์ CatBTI",
+    traitSummary: "สรุปนิสัย",
+    butlerGuide: "🧭 คู่มือสำหรับทาส",
+    caution: "⚠️ ระวังนิดนึง",
+    footerShare: "catbti • อยากรู้ใจ ‘เจ้านาย’ ไหมทาส 😼",
+  },
+} as const;
+
 type Question = {
   prompt: string;
-  options: [string, string, string, string, string]; // 1~5점에 매핑
+  options: [string, string, string, string, string]; // 1~5점 매핑
   axis: Axis;
-  reverse?: boolean; // 역문항 (E축 일부)
+  reverse?: boolean;
 };
 
+// ✅ 질문은 일단 한국어 유지 (태국어는 다음 단계에서 현지화)
 const questions: Question[] = [
   // 🐾 사회성(S)
   {
@@ -166,6 +224,7 @@ type ResultPack = {
   caution: string[];
 };
 
+// ✅ 결과도 일단 한국어 유지 (태국어는 다음 단계에서 “밈 현지화”로 따로 만들자)
 const results: Record<ResultCode, ResultPack> = {
   SAE: {
     title: "집사 너무 좋아 💕",
@@ -228,7 +287,6 @@ const results: Record<ResultCode, ResultPack> = {
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
-
 function axisLabel(axis: Axis) {
   if (axis === "S") return "사회성";
   if (axis === "A") return "활동성";
@@ -236,6 +294,25 @@ function axisLabel(axis: Axis) {
 }
 
 export default function App() {
+  // ✅ 언어 선택(홈에서만 바꾸게 UX로 유도)
+  const [lang, setLang] = useState<Lang>(() => {
+    try {
+      const saved = typeof window !== "undefined" ? localStorage.getItem(LANG_KEY) : null;
+      return saved === "th" || saved === "ko" ? (saved as Lang) : "ko";
+    } catch {
+      return "ko";
+    }
+  });
+
+  const t = uiText[lang];
+
+  const changeLang = (next: Lang) => {
+    setLang(next);
+    try {
+      localStorage.setItem(LANG_KEY, next);
+    } catch {}
+  };
+
   const [screen, setScreen] = useState<"home" | "quiz" | "done">("home");
   const [answers, setAnswers] = useState<number[]>([]);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -294,7 +371,7 @@ export default function App() {
   };
 
   const pickOption = (optionIndex: number) => {
-    const score = optionIndex + 1; // 1~5
+    const score = optionIndex + 1;
     setAnswers((prev) => [...prev, score]);
 
     if (answers.length + 1 >= questions.length) {
@@ -317,28 +394,26 @@ export default function App() {
       link.href = dataUrl;
       link.click();
     } catch (e) {
-      alert("이미지 저장에 실패했어. (브라우저/확장 프로그램 영향일 수 있음)");
+      alert(t.saveFailed);
       console.error(e);
     } finally {
       setIsDownloading(false);
     }
   };
 
-  // ✅ 친구에게 공유하기
+  // ✅ 공유: 이미지 + 링크 함께
   const shareToFriends = async () => {
-    const shareText = "우리집 주인님의 MBTI가 궁금하다면 😼";
+    const shareText = t.shareText;
     const shareUrl = window.location.href;
 
     try {
       setIsSharing(true);
 
-      // 1) 결과 이미지를 만들어 File로 변환
       const dataUrl = await makeResultPngDataUrl();
       const res = await fetch(dataUrl);
       const blob = await res.blob();
       const file = new File([blob], `CatBTI_${resultCode || "result"}.png`, { type: blob.type || "image/png" });
 
-      // 2) Web Share API 지원 + 파일 공유 가능하면 공유창 열기
       const navAny = navigator as any;
       const canShareFiles = typeof navAny?.canShare === "function" && navAny.canShare({ files: [file] });
       const canShare = typeof navAny?.share === "function";
@@ -353,19 +428,16 @@ export default function App() {
         return;
       }
 
-      // 3) 파일 공유가 안 되면: 링크 복사 fallback
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareUrl);
-        alert("공유 기능이 지원되지 않아 링크를 복사했어! 친구에게 붙여넣어 보내줘 😼");
+        alert(t.copiedLink);
         return;
       }
 
-      // 4) 마지막 fallback: 안내창
-      alert(`공유 기능이 지원되지 않아.\n아래 링크를 복사해서 친구에게 보내줘:\n\n${shareUrl}`);
-    } catch (e: any) {
-      // 사용자가 공유창에서 취소한 경우도 여기로 들어올 수 있음
+      alert(`${t.copiedLink}\n\n${shareUrl}`);
+    } catch (e) {
       console.error(e);
-      alert("공유를 완료하지 못했어. (공유를 취소했거나, 기기에서 지원하지 않을 수 있어)");
+      alert(t.shareFailed);
     } finally {
       setIsSharing(false);
     }
@@ -441,6 +513,16 @@ export default function App() {
     transition: "transform 120ms ease",
   };
 
+  const langBtn = (active: boolean): React.CSSProperties => ({
+    padding: "8px 10px",
+    borderRadius: 999,
+    border: active ? "2px solid #111" : "1px solid #ddd",
+    background: active ? "#111" : "white",
+    color: active ? "white" : "#111",
+    cursor: "pointer",
+    fontSize: 13,
+  });
+
   const progressPct = Math.round(((Math.min(currentIndex + 1, questions.length)) / questions.length) * 100);
 
   return (
@@ -448,14 +530,24 @@ export default function App() {
       <div style={cardStyle}>
         {screen === "home" && (
           <>
+            {/* ✅ 언어 선택(홈에서만) */}
+            <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
+              <button onClick={() => changeLang("ko")} style={langBtn(lang === "ko")}>
+                {t.langBtnKo}
+              </button>
+              <button onClick={() => changeLang("th")} style={langBtn(lang === "th")}>
+                {t.langBtnTh}
+              </button>
+            </div>
+
             <img src={catHome} alt="cat home" style={imageStyle} />
-            <h1 style={{ margin: 0, letterSpacing: -0.3 }}>CatBTI</h1>
-            <p style={{ marginTop: 10, marginBottom: 0, opacity: 0.78, fontSize: 14, lineHeight: 1.5 }}>
-              우리 집 고양이의 속마음, 집사가 번역해보자 😼
+            <h1 style={{ margin: 0, letterSpacing: -0.3 }}>{t.brandLine}</h1>
+            <p style={{ marginTop: 10, marginBottom: 0, opacity: 0.82, fontSize: 14, lineHeight: 1.5 }}>
+              {t.tagline}
             </p>
 
             <button onClick={startQuiz} style={primaryBtn}>
-              테스트 시작하기
+              {t.start}
             </button>
           </>
         )}
@@ -477,7 +569,7 @@ export default function App() {
                   fontSize: 13,
                 }}
               >
-                ← 이전
+                {t.prev}
               </button>
 
               <div style={{ fontSize: 12, opacity: 0.7 }}>
@@ -514,13 +606,12 @@ export default function App() {
               ))}
             </div>
 
-            <div style={{ marginTop: 10, fontSize: 12, opacity: 0.6 }}>(선택하면 바로 다음 질문으로 넘어가요)</div>
+            <div style={{ marginTop: 10, fontSize: 12, opacity: 0.6 }}>{t.quizHint}</div>
           </>
         )}
 
         {screen === "done" && result && (
           <>
-            {/* ✅ 저장/공유될 카드 영역 */}
             <div ref={shareCardRef} style={{ padding: 2 }}>
               <img src={catResult} alt="cat result" style={imageStyle} />
 
@@ -533,7 +624,7 @@ export default function App() {
                   boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
                 }}
               >
-                <div style={{ fontSize: 12, opacity: 0.75 }}>CatBTI 결과</div>
+                <div style={{ fontSize: 12, opacity: 0.75 }}>{t.resultLabel}</div>
                 <h2 style={{ margin: "8px 0 6px", letterSpacing: -0.3 }}>{result.title}</h2>
 
                 <div
@@ -556,7 +647,7 @@ export default function App() {
               </div>
 
               <div style={{ marginTop: 14, textAlign: "left" }}>
-                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10 }}>성향 요약</div>
+                <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10 }}>{t.traitSummary}</div>
 
                 {axisBars.map((b) => (
                   <div key={b.axis} style={{ marginBottom: 12 }}>
@@ -573,7 +664,7 @@ export default function App() {
               </div>
 
               <div style={{ marginTop: 10, fontSize: 11, opacity: 0.55, textAlign: "center" }}>
-                catbti • 우리집 주인님의 MBTI가 궁금하다면 😼
+                {t.footerShare}
               </div>
             </div>
 
@@ -581,7 +672,7 @@ export default function App() {
               onClick={() => setManualOpen((v) => !v)}
               style={{ ...secondaryBtn, marginTop: 14, textAlign: "left", fontWeight: 600 }}
             >
-              {manualOpen ? "▴ 우리 집 주인님 설명서 접기" : "▾ 우리 집 주인님 설명서 열기"}
+              {manualOpen ? t.manualClose : t.manualOpen}
             </button>
 
             {manualOpen && (
@@ -595,14 +686,14 @@ export default function App() {
                   textAlign: "left",
                 }}
               >
-                <div style={{ fontSize: 13, opacity: 0.85, marginBottom: 8 }}>🧭 집사 가이드</div>
+                <div style={{ fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.butlerGuide}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
                   {result.guide.map((g, idx) => (
                     <li key={idx}>{g}</li>
                   ))}
                 </ul>
 
-                <div style={{ marginTop: 12, fontSize: 13, opacity: 0.85, marginBottom: 8 }}>⚠️ 주의 포인트</div>
+                <div style={{ marginTop: 12, fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.caution}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
                   {result.caution.map((c, idx) => (
                     <li key={idx}>{c}</li>
@@ -611,18 +702,16 @@ export default function App() {
               </div>
             )}
 
-            {/* ✅ 공유 1순위 버튼 */}
             <button onClick={shareToFriends} style={primaryBtn} disabled={isSharing || isDownloading}>
-              {isSharing ? "공유 준비 중..." : "친구 집사에게 공유하기"}
+              {isSharing ? t.sharePreparing : t.shareBtn}
             </button>
 
-            {/* 다운로드도 유지 */}
             <button onClick={downloadResultImage} style={secondaryBtn} disabled={isSharing || isDownloading}>
-              {isDownloading ? "이미지 만드는 중..." : "이미지로 저장하기"}
+              {isDownloading ? t.downloadPreparing : t.downloadBtn}
             </button>
 
             <button onClick={resetAll} style={secondaryBtn}>
-              다시 하기
+              {t.retry}
             </button>
           </>
         )}
