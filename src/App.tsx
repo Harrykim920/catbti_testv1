@@ -12,8 +12,7 @@ type Lang = "ko" | "th";
 const LANG_KEY = "catbti_lang";
 
 /** ✅ 별 게이지로 고정 */
-type MeterStyle = "star";
-const METER_STYLE: MeterStyle = "star";
+
 
 const uiText = {
   ko: {
