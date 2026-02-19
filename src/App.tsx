@@ -425,7 +425,7 @@ function Meter({
 }) {
   return (
     <div style={{ display: "flex", gap: 3, alignItems: "center", justifyContent: "flex-end" }}>
-      {Array.from({ length: 5 }).map((_, i) => (
+      {Array.from({ length: 5 }).map((_: unknown, i: number) => (
         <StarIcon key={i} filled={i < level} />
       ))}
     </div>
@@ -707,13 +707,13 @@ export default function App() {
             </div>
 
             <h2 style={{ marginTop: 16, marginBottom: 12, fontSize: 20, letterSpacing: -0.2, lineHeight: 1.35 }}>
-              {qPrompt.split("\n").map((line, idx, arr) => (
+              {qPrompt.split("\n").map((line: string, idx: number, arr: string[]) => (
                 <span key={idx}>{line}{idx < arr.length - 1 ? <br /> : null}</span>
               ))}
             </h2>
 
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 10 }}>
-              {qOptions.map((txt, idx) => (
+              {qOptions.map((txt: string, idx: number) => (
                 <button
                   key={idx}
                   onClick={() => pickOption(idx)}
@@ -750,16 +750,16 @@ export default function App() {
                   "{resultPack.oneLiner[lang]}"
                 </div>
                 <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
-                  {resultPack.tags[lang].map((tag, i) => <span key={i} style={chipStyle}>{tag}</span>)}
+                  {resultPack.tags[lang].map((tag: string, i: number) => <span key={i} style={chipStyle}>{tag}</span>)}
                 </div>
                 <div style={{ marginTop: 12, textAlign: "left" }}>
                   <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>{t.behaviorsTitle}</div>
                   <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                    {resultPack.behaviors[lang].map((b, idx) => <li key={idx}>{b}</li>)}
+                    {resultPack.behaviors[lang].map((b: string, idx: number) => <li key={idx}>{b}</li>)}
                   </ul>
                 </div>
                 <div style={{ marginTop: 12, opacity: 0.85, fontSize: 14, lineHeight: 1.55 }}>
-                  {resultPack.heart[lang].map((line, i) => <div key={i}>{line}</div>)}
+                  {resultPack.heart[lang].map((line: string, i: number) => <div key={i}>{line}</div>)}
                 </div>
               </div>
 
@@ -767,7 +767,7 @@ export default function App() {
               <div style={{ marginTop: 14, textAlign: "left" }}>
                 <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10 }}>{t.traitSummary}</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {axisLevels.map((b) => (
+                  {axisLevels.map((b: { axis: Axis; level: number }) => (
                     <div key={b.axis} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                       <div style={{ fontSize: 13, opacity: 0.85 }}>{axisLabel(b.axis, lang)}</div>
                       <Meter level={b.level} style={METER_STYLE} />
@@ -779,7 +779,7 @@ export default function App() {
               <div style={{ marginTop: 10, fontSize: 11, opacity: 0.55, textAlign: "center" }}>{t.footerShare}</div>
             </div>
 
-            <button onClick={() => setManualOpen((v) => !v)} style={{ ...secondaryBtn, marginTop: 14, textAlign: "left", fontWeight: 600 }}>
+            <button onClick={() => setManualOpen((v: boolean) => !v)} style={{ ...secondaryBtn, marginTop: 14, textAlign: "left", fontWeight: 600 }}>
               {manualOpen ? t.manualClose : t.manualOpen}
             </button>
 
@@ -787,11 +787,11 @@ export default function App() {
               <div style={{ marginTop: 10, padding: 14, borderRadius: 16, border: "1px solid #eee", background: "rgba(255,255,255,0.86)", textAlign: "left" }}>
                 <div style={{ fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.butlerGuide}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                  {resultPack.guide[lang].map((g, idx) => <li key={idx}>{g}</li>)}
+                  {resultPack.guide[lang].map((g: string, idx: number) => <li key={idx}>{g}</li>)}
                 </ul>
                 <div style={{ marginTop: 12, fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.caution}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                  {resultPack.caution[lang].map((c, idx) => <li key={idx}>{c}</li>)}
+                  {resultPack.caution[lang].map((c: string, idx: number) => <li key={idx}>{c}</li>)}
                 </ul>
               </div>
             )}
