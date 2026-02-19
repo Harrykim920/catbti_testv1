@@ -13,6 +13,62 @@ const LANG_KEY = "catbti_lang";
 
 /** ✅ 5단계 아이콘 게이지 커스텀 */
 type MeterStyle = "cat" | "star";
+const METER_STYLE: MeterStyle = "cat"; // cat 추천
+
+function CatOutline({ size = 18, color = "rgba(0,0,0,0.22)" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 3.2 14.8 5.8H17c1 0 1.8.8 1.8 1.8v3.9c0 5.4-3.1 9.5-6.8 9.5S5.2 16.9 5.2 11.5V7.6c0-1 .8-1.8 1.8-1.8h2.2L12 3.2Z"
+        stroke={color}
+        strokeWidth="1.7"
+        strokeLinejoin="round"
+      />
+      <path d="M9.2 12.2h.01M14.8 12.2h.01" stroke={color} strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M10.6 14.6c.8.7 2 .7 2.8 0" stroke={color} strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CatFilled({ size = 18, color = "#111" }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 3.2 14.8 5.8H17c1 0 1.8.8 1.8 1.8v3.9c0 5.4-3.1 9.5-6.8 9.5S5.2 16.9 5.2 11.5V7.6c0-1 .8-1.8 1.8-1.8h2.2L12 3.2Z"
+        fill={color}
+      />
+      <path d="M9.2 12.2h.01M14.8 12.2h.01" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+      <path d="M10.6 14.6c.8.7 2 .7 2.8 0" stroke="white" strokeWidth="1.7" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function Meter({ level, style = "cat" }: { level: number; style?: MeterStyle }) {
+  // level: 1~5
+  if (style === "star") {
+    return (
+      <div style={{ display: "flex", gap: 4, alignItems: "center", justifyContent: "flex-end" }}>
+        {Array.from({ length: 5 }).map((_, i) => (
+          <span key={i} style={{ fontSize: 16, lineHeight: 1 }}>
+            {i < level ? "★" : "☆"}
+          </span>
+        ))}
+      </div>
+    );
+  }
+
+  // ✅ cat mode: 채움=filled cat / 빈칸=outline cat
+  return (
+    <div style={{ display: "flex", gap: 6, alignItems: "center", justifyContent: "flex-end" }}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} style={{ display: "inline-flex" }}>
+          {i < level ? <CatFilled /> : <CatOutline />}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 const METER_STYLE: MeterStyle = "cat"; // "star"로 바꾸면 별 게이지로 변경됨
 
 const uiText = {
