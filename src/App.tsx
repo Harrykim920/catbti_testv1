@@ -12,7 +12,7 @@ type Lang = "ko" | "th";
 const LANG_KEY = "catbti_lang";
 
 /** ✅ 5단계 아이콘 게이지 커스텀 */
-type MeterStyle = "star";
+type MeterStyle = "star"
 const METER_STYLE: MeterStyle = "cat"; // "star"로 바꾸면 별 게이지로 변경됨
 
 const uiText = {
