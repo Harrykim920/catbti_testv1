@@ -11,9 +11,9 @@ type ResultCode = "SAE" | "SAT" | "SCE" | "SCT" | "IAE" | "IAT" | "ICE" | "ICT";
 type Lang = "ko" | "th";
 const LANG_KEY = "catbti_lang";
 
-/** ✅ 5단계 아이콘 게이지 커스텀 */
+/** ✅ 별 5개 게이지로 고정 */
 type MeterStyle = "cat" | "star";
-const METER_STYLE: MeterStyle = "cat"; // "star"로 바꾸면 별 게이지로 변경됨
+const METER_STYLE: MeterStyle = "star";
 
 const uiText = {
   ko: {
@@ -47,7 +47,7 @@ const uiText = {
     langBtnKo: "🇰🇷 한국어",
     langBtnTh: "🇹🇭 ไทย",
     brandLine: "CatBTI",
-    tagline: "อยากรู้ใจ ‘เจ้านาย’ ไหมทาส 😼",
+    tagline: "อยากรู้ใจ 'เจ้านาย' ไหมทาส 😼",
     start: "เริ่มทดสอบ",
     shareBtn: "แชร์ให้เพื่อนทาส",
     sharePreparing: "กำลังเตรียมแชร์...",
@@ -57,7 +57,7 @@ const uiText = {
     manualClose: "▴ ปิดคู่มือเจ้านายบ้านเรา",
     retry: "ทำอีกครั้ง",
     quizHint: "(เลือกแล้วไปข้อถัดไปทันที)",
-    shareText: "อยากรู้ MBTI ของ ‘เจ้านาย’ ไหมทาส 😼",
+    shareText: "อยากรู้ MBTI ของ 'เจ้านาย' ไหมทาส 😼",
     copiedLink: "อุปกรณ์นี้แชร์ไฟล์ไม่ได้ เลยคัดลอกลิงก์ให้แล้วนะ! เอาไปวางส่งเพื่อนได้เลย 😼",
     shareFailed: "แชร์ไม่สำเร็จ (อาจยกเลิกหรืออุปกรณ์ไม่รองรับ)",
     saveFailed: "บันทึกรูปไม่สำเร็จ (อาจโดนส่วนเสริมหรือเบราว์เซอร์บล็อก)",
@@ -67,7 +67,7 @@ const uiText = {
     behaviorsTitle: "พฤติกรรมเด่น",
     butlerGuide: "🧭 คู่มือสำหรับทาส",
     caution: "⚠️ ระวังนิดนึง",
-    footerShare: "catbti • อยากรู้ใจ ‘เจ้านาย’ ไหมทาส 😼",
+    footerShare: "catbti • อยากรู้ใจ 'เจ้านาย' ไหมทาส 😼",
     choiceLabel: "ตัวเลือก",
   },
 } as const;
@@ -83,18 +83,18 @@ const questions: Question[] = [
   // 🐾 사회성(S)
   {
     axis: "S",
-    prompt: { ko: "낯선 사람이 집에 놀러 왔다.\n우리 집 주인님의 반응은?", th: "มีคนแปลกหน้ามาที่บ้าน\n‘เจ้านาย’ ของเราทำไง?" },
+    prompt: { ko: "낯선 사람이 집에 놀러 왔다.\n우리 집 주인님의 반응은?", th: "มีคนแปลกหน้ามาที่บ้าน\n'เจ้านาย' ของเราทำไง?" },
     options: {
-      ko: ["“여긴 내 구역이야!” 하며 경계한다", "바로 사라져서 숨는다", "멀리서 조용히 관찰한다", "무심한 듯 지나가지만 은근 신경 쓴다", "먼저 다가가 냄새 맡으며 인사한다"],
-      th: ["“นี่ถิ่นของฉันนะ” ทำหน้าดุใส่", "หายตัวทันที ไปซ่อนก่อน", "ยืนไกลๆ เงียบๆ แล้วส่อง", "ทำเหมือนไม่สน…แต่แอบจับตาอยู่", "เดินไปดม ทำความรู้จักก่อน"],
+      ko: [""여긴 내 구역이야!" 하며 경계한다", "바로 사라져서 숨는다", "멀리서 조용히 관찰한다", "무심한 듯 지나가지만 은근 신경 쓴다", "먼저 다가가 냄새 맡으며 인사한다"],
+      th: [""นี่ถิ่นของฉันนะ" ทำหน้าดุใส่", "หายตัวทันที ไปซ่อนก่อน", "ยืนไกลๆ เงียบๆ แล้วส่อง", "ทำเหมือนไม่สน…แต่แอบจับตาอยู่", "เดินไปดม ทำความรู้จักก่อน"],
     },
   },
   {
     axis: "S",
     prompt: { ko: "집사가 다른 방으로 이동하면 우리 주인님은?", th: "ทาสเดินไปอีกห้อง…เจ้านายทำไง?" },
     options: {
-      ko: ["꿈쩍도 하지 않는다", "한 번 쳐다보고 말다", "잠시 고민하다가 따라온다", "바로 뒤에서 조용히 따라온다", "“어디 가?” 하며 바로 쫓아온다"],
-      th: ["ไม่ขยับเลย เฉยมาก", "หันไปมองทีนึงแล้วจบ", "คิดแป๊บ…แล้วค่อยเดินตาม", "ตามไปเงียบๆ ติดหลังเลย", "“ไปไหน?” แล้ววิ่งตามทันที"],
+      ko: ["꿈쩍도 하지 않는다", "한 번 쳐다보고 말다", "잠시 고민하다가 따라온다", "바로 뒤에서 조용히 따라온다", ""어디 가?" 하며 바로 쫓아온다"],
+      th: ["ไม่ขยับเลย เฉยมาก", "หันไปมองทีนึงแล้วจบ", "คิดแป๊บ…แล้วค่อยเดินตาม", "ตามไปเงียบๆ ติดหลังเลย", ""ไปไหน?" แล้ววิ่งตามทันที"],
     },
   },
   {
@@ -143,8 +143,8 @@ const questions: Question[] = [
     axis: "A",
     prompt: { ko: "낚싯대를 흔들면 반응은?", th: "ทาสแกว่งไม้ตกแมว…เจ้านายทำไง?" },
     options: {
-      ko: ["“그건 네가 해.”", "몇 번 툭 치고 끝낸다", "눈은 따라가지만 몸은 느긋하다", "진지하게 추적한다", "끝까지 집요하게 사냥한다"],
-      th: ["“เธอเล่นเองไป”", "แตะๆ พอเป็นพิธี", "ตาตาม…แต่ตัวขอชิล", "จ้อง-ย่อง-พุ่ง แบบจริงจัง", "ล่าไม่เลิก จนกว่าจะชนะ"],
+      ko: [""그건 네가 해."", "몇 번 툭 치고 끝낸다", "눈은 따라가지만 몸은 느긋하다", "진지하게 추적한다", "끝까지 집요하게 사냥한다"],
+      th: [""เธอเล่นเองไป"", "แตะๆ พอเป็นพิธี", "ตาตาม…แต่ตัวขอชิล", "จ้อง-ย่อง-พุ่ง แบบจริงจัง", "ล่าไม่เลิก จนกว่าจะชนะ"],
     },
   },
 
@@ -163,8 +163,8 @@ const questions: Question[] = [
     reverse: true,
     prompt: { ko: "갑자기 큰 소리가 났을 때 반응은?", th: "มีเสียงดังปุ๊บ เจ้านายทำไง?" },
     options: {
-      ko: ["깜짝 놀라 크게 반응한다", "급히 숨는다", "긴장 상태를 유지한다", "잠시 멈췄다가 금방 회복한다", "“뭐였지?” 하고 지나간다"],
-      th: ["สะดุ้งสุดตัว มีอาการชัดเจน", "รีบหายไปก่อน", "เกร็งๆ คอยดูสถานการณ์", "หยุดแป๊บแล้วกลับมาได้", "“อะไรนะ?” แล้วก็ชิลต่อ"],
+      ko: ["깜짝 놀라 크게 반응한다", "급히 숨는다", "긴장 상태를 유지한다", "잠시 멈췄다가 금방 회복한다", ""뭐였지?" 하고 지나간다"],
+      th: ["สะดุ้งสุดตัว มีอาการชัดเจน", "รีบหายไปก่อน", "เกร็งๆ คอยดูสถานการณ์", "หยุดแป๊บแล้วกลับมาได้", ""อะไรนะ?" แล้วก็ชิลต่อ"],
     },
   },
   {
@@ -273,7 +273,7 @@ const results: Record<ResultCode, ResultPack> = {
       ko: ["사료/간식 바꿀 땐 7~10일에 걸쳐 천천히.", "새 물건은 한 번에 많이 두지 말고 하나씩.", "싫어하는 신호(피하기/숨기)를 존중해줘."],
       th: ["เปลี่ยนอาหาร/ขนม ค่อยๆ 7–10 วัน", "ของใหม่ทีละชิ้น อย่าถาโถม", "ถ้าฉันหลบ/ไม่เอา ให้เคารพสัญญาณ"],
     },
-    caution: { ko: ["억지로 ‘좋아해!’ 강요하면 더 거부감이 커질 수 있어."], th: ["บังคับให้ ‘ต้องชอบ’ จะยิ่งต่อต้านนะทาส"] },
+    caution: { ko: ["억지로 '좋아해!' 강요하면 더 거부감이 커질 수 있어."], th: ["บังคับให้ 'ต้องชอบ' จะยิ่งต่อต้านนะทาส"] },
   },
   IAE: {
     characterName: { ko: "새벽폭주냥 🌙", th: "แมวตีสามสนามแข่ง 🌙" },
@@ -288,8 +288,8 @@ const results: Record<ResultCode, ResultPack> = {
       th: ["พอบ้านเงียบ…พลังฉันก็มาจ้า", "ตอนนั้นแหละอิสระสุดๆ", "เลยต้องวิ่งให้โลกรู้"],
     },
     guide: {
-      ko: ["잠들기 전 10분 ‘마지막 놀이’ 추천.", "밤에 혼자 놀 장난감(공/트랙) 준비.", "낮에 활동을 분산(창가 놀이/간식 퍼즐)."],
-      th: ["ก่อนนอนเล่น 10 นาที ‘รอบสุดท้าย’", "เตรียมของเล่นเล่นคนเดียวตอนกลางคืน", "กระจายกิจกรรมตอนกลางวัน (หน้าต่าง/ของเล่นปริศนา)"],
+      ko: ["잠들기 전 10분 '마지막 놀이' 추천.", "밤에 혼자 놀 장난감(공/트랙) 준비.", "낮에 활동을 분산(창가 놀이/간식 퍼즐)."],
+      th: ["ก่อนนอนเล่น 10 นาที 'รอบสุดท้าย'", "เตรียมของเล่นเล่นคนเดียวตอนกลางคืน", "กระจายกิจกรรมตอนกลางวัน (หน้าต่าง/ของเล่นปริศนา)"],
     },
     caution: { ko: ["야간 활동을 억지로 막기보다 루틴으로 유도해줘."], th: ["อย่าห้ามแบบดื้อๆ ตั้งรูทีนให้แทนจะเวิร์กกว่า"] },
   },
@@ -298,7 +298,7 @@ const results: Record<ResultCode, ResultPack> = {
     oneLiner: { ko: "내가 원할 때만 다가가는 독립형이다.", th: "จะเข้าใกล้เมื่อฉันพร้อมเท่านั้น" },
     tags: { ko: ["#독립형", "#선택적스킨십", "#신뢰천천히"], th: ["#สายเดี่ยว", "#กอดแบบเลือกได้", "#ไว้ใจค่อยๆ"] },
     behaviors: {
-      ko: ["부르면 안 오다가, 자기가 원할 때만 온다.", "스킨십은 ‘내 타이밍’이 중요하다.", "혼자 놀거리만 있어도 잘 지낸다."],
+      ko: ["부르면 안 오다가, 자기가 원할 때만 온다.", "스킨십은 '내 타이밍'이 중요하다.", "혼자 놀거리만 있어도 잘 지낸다."],
       th: ["เรียกไม่มา…แต่เดี๋ยวฉันอยากมาก็มาเอง", "กอดได้เมื่อฉันอนุญาต", "มีของเล่นเล่นเองแล้วอยู่ได้สบาย"],
     },
     heart: {
@@ -306,8 +306,8 @@ const results: Record<ResultCode, ResultPack> = {
       th: ["อยู่คนเดียวสบายใจ", "จะเข้าใกล้เมื่อฉันพร้อม", "ไว้ใจได้…แต่ขอเวลาหน่อย"],
     },
     guide: {
-      ko: ["혼자 놀 거리(터널/스크래처/트랙)를 만들어줘.", "스킨십은 ‘선택권’을 줘 (다가오면 OK).", "사냥놀이(낚싯대/숨바꼭질)로 교감."],
-      th: ["มีของเล่นเล่นคนเดียว (อุโมงค์/ที่ลับเล็บ/รางบอล)", "ให้ ‘สิทธิ์เลือก’ เรื่องกอด ถ้าฉันมาเองคือโอเค", "เล่นแนวล่า (ไม้ตกแมว/ซ่อนหา) เพื่อเชื่อมใจ"],
+      ko: ["혼자 놀 거리(터널/스크래처/트랙)를 만들어줘.", "스킨십은 '선택권'을 줘 (다가오면 OK).", "사냥놀이(낚싯대/숨바꼭질)로 교감."],
+      th: ["มีของเล่นเล่นคนเดียว (อุโมงค์/ที่ลับเล็บ/รางบอล)", "ให้ 'สิทธิ์เลือก' เรื่องกอด ถ้าฉันมาเองคือโอเค", "เล่นแนวล่า (ไม้ตกแมว/ซ่อนหา) เพื่อเชื่อมใจ"],
     },
     caution: { ko: ["억지로 안거나 붙잡으면 관계가 멀어질 수 있어."], th: ["จับกอด/บังคับมากไป ความสัมพันธ์จะถอยได้นะ"] },
   },
@@ -316,7 +316,7 @@ const results: Record<ResultCode, ResultPack> = {
     oneLiner: { ko: "좋아하긴 하는데, 거리는 꼭 필요한 타입이다.", th: "ชอบนะ…แต่ต้องมีระยะ" },
     tags: { ko: ["#거리감", "#조용한동거", "#먼저오면OK"], th: ["#ต้องมีระยะ", "#อยู่ร่วมแบบเงียบๆ", "#ฉันมาก่อนค่อยกอด"] },
     behaviors: {
-      ko: ["가까이 붙으면 피하고, 조금 떨어지면 곁에 온다.", "같은 공간에서 ‘동거’하는 걸 좋아한다.", "먼저 다가올 때까지 기다리면 관계가 좋아진다."],
+      ko: ["가까이 붙으면 피하고, 조금 떨어지면 곁에 온다.", "같은 공간에서 '동거'하는 걸 좋아한다.", "먼저 다가올 때까지 기다리면 관계가 좋아진다."],
       th: ["ติดมากไปฉันหลบ…แต่ถ้าพอดีๆ ฉันจะมาเอง", "อยู่ห้องเดียวกันแบบไม่วุ่นวายคือดีที่สุด", "รอให้ฉันเข้าหาเองแล้วจะเวิร์ก"],
     },
     heart: {
@@ -342,7 +342,7 @@ const results: Record<ResultCode, ResultPack> = {
       th: ["ฉันไม่พูดเยอะ แต่ส่องละเอียด", "ถ้ารู้สึกปลอดภัยจะค่อยๆ เข้าใกล้", "ของแปลก/การเปลี่ยนแปลงเยอะๆ ทำให้กังวล"],
     },
     guide: {
-      ko: ["창가/높은 곳 같은 관찰 포인트를 만들어줘.", "새 환경/새 사람은 ‘천천히’ 적응 시간을.", "예측 가능한 루틴이 안정감을 줘."],
+      ko: ["창가/높은 곳 같은 관찰 포인트를 만들어줘.", "새 환경/새 사람은 '천천히' 적응 시간을.", "예측 가능한 루틴이 안정감을 줘."],
       th: ["ทำจุดส่อง (หน้าต่าง/ที่สูง) ให้ฉัน", "คนใหม่/ที่ใหม่ ให้เวลาปรับตัวแบบช้าๆ", "รูทีนเดิมๆ ทำให้ใจนิ่ง"],
     },
     caution: { ko: ["갑작스런 소음/방문객/가구 이동이 반복되면 예민해질 수 있어."], th: ["เสียงดัง/แขกมา/ย้ายของบ่อยๆ อาจทำให้ไวขึ้น"] },
@@ -364,27 +364,61 @@ function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
 }
 
-/** 4~20 점수를 1~5 단계로 변환 */
-function toLevel5(v: number) {
-  const clamped = clamp(v, 4, 20);
-  // 0~1로 정규화 후 0~4로 확장, 반올림 후 +1 => 1~5
-  const normalized = (clamped - 4) / 16;
-  return clamp(Math.round(normalized * 4) + 1, 1, 5);
+/**
+ * ✅ 수정된 점수 → 별 5개 변환 함수
+ *
+ * 구조:
+ * - 각 축: 4문항 × 5점 = 최대 20점, 최소 4점
+ * - 5구간으로 균등 분할:
+ *   4~7점   → ★1  (매우 낮음)
+ *   8~10점  → ★2  (낮음)
+ *   11~13점 → ★3  (중간)
+ *   14~16점 → ★4  (높음)
+ *   17~20점 → ★5  (매우 높음)
+ */
+function toLevel5(score: number): number {
+  const s = clamp(score, 4, 20);
+  if (s <= 7)  return 1;
+  if (s <= 10) return 2;
+  if (s <= 13) return 3;
+  if (s <= 16) return 4;
+  return 5;
+}
+
+/**
+ * ✅ 수정된 결과 판정 기준선
+ *
+ * 5개 옵션 × 4문항 → 총 4~20점
+ * 중앙값: (4 + 20) / 2 = 12  →  > 12 이면 양성(S/A/E)
+ * 동점(12점)은 음성(I/C/T)으로 처리 (보수적 기준)
+ */
+function getResultCode(scores: Record<Axis, number>): ResultCode {
+  const s = scores.S > 12 ? "S" : "I";
+  const a = scores.A > 12 ? "A" : "C";
+  const e = scores.E > 12 ? "E" : "T";
+  return (s + a + e) as ResultCode;
 }
 
 function Meter({
   level,
-  style = "cat",
+  style = "star",
 }: {
   level: number; // 1~5
   style?: MeterStyle;
 }) {
   const filled = style === "star" ? "★" : "🐱";
-  const empty = style === "star" ? "☆" : "🐾";
+  const empty  = style === "star" ? "☆" : "🐾";
   return (
     <div style={{ display: "flex", gap: 4, alignItems: "center", justifyContent: "flex-end" }}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} style={{ fontSize: 16, lineHeight: 1 }}>
+        <span
+          key={i}
+          style={{
+            fontSize: 18,
+            lineHeight: 1,
+            color: i < level ? "#f5a623" : "#ddd",
+          }}
+        >
           {i < level ? filled : empty}
         </span>
       ))}
@@ -406,9 +440,7 @@ export default function App() {
 
   const changeLang = (next: Lang) => {
     setLang(next);
-    try {
-      localStorage.setItem(LANG_KEY, next);
-    } catch {}
+    try { localStorage.setItem(LANG_KEY, next); } catch {}
   };
 
   const [screen, setScreen] = useState<"home" | "quiz" | "done">("home");
@@ -422,26 +454,27 @@ export default function App() {
   const currentIndex = answers.length;
   const currentQ = questions[currentIndex];
 
+  // ✅ 수정된 점수 계산: 역문항은 (6 - score), 일반은 score 그대로
   const axisScores = useMemo(() => {
     const scores: Record<Axis, number> = { S: 0, A: 0, E: 0 };
     answers.forEach((pickedScore, i) => {
       const q = questions[i];
+      // pickedScore: optionIndex + 1 → 1~5
       const value = q.reverse ? 6 - pickedScore : pickedScore;
       scores[q.axis] += value;
     });
     return scores;
   }, [answers]);
 
+  // ✅ 수정된 결과 판정 (기준선 > 12)
   const resultCode = useMemo((): ResultCode | "" => {
     if (answers.length < questions.length) return "";
-    const s = axisScores.S >= 12 ? "S" : "I";
-    const a = axisScores.A >= 12 ? "A" : "C";
-    const e = axisScores.E >= 12 ? "E" : "T";
-    return (s + a + e) as ResultCode;
+    return getResultCode(axisScores);
   }, [answers.length, axisScores]);
 
   const resultPack = resultCode ? results[resultCode] : null;
 
+  // ✅ 수정된 레벨 계산 (toLevel5 구간 기반)
   const axisLevels = useMemo(() => {
     return [
       { axis: "S" as Axis, level: toLevel5(axisScores.S) },
@@ -468,10 +501,11 @@ export default function App() {
   };
 
   const pickOption = (optionIndex: number) => {
-    const score = optionIndex + 1;
-    setAnswers((prev) => [...prev, score]);
+    const score = optionIndex + 1; // 1~5
+    const newAnswers = [...answers, score];
+    setAnswers(newAnswers);
 
-    if (answers.length + 1 >= questions.length) {
+    if (newAnswers.length >= questions.length) {
       setScreen("done");
       setManualOpen(false);
     }
@@ -479,12 +513,7 @@ export default function App() {
 
   const makeResultPngDataUrl = async () => {
     if (!shareCardRef.current) throw new Error("shareCardRef is null");
-    // 폰트 로딩 완료 후 캡처(실패율 감소)
-    // @ts-ignore
-    if (document?.fonts?.ready) {
-      // @ts-ignore
-      await document.fonts.ready;
-    }
+    if (document?.fonts?.ready) await document.fonts.ready;
     return htmlToImage.toPng(shareCardRef.current, { pixelRatio: 2, cacheBust: true });
   };
 
@@ -505,12 +534,9 @@ export default function App() {
   };
 
   const shareToFriends = async () => {
-    const shareText = t.shareText;
     const shareUrl = window.location.href;
-
     try {
       setIsSharing(true);
-
       const dataUrl = await makeResultPngDataUrl();
       const res = await fetch(dataUrl);
       const blob = await res.blob();
@@ -521,16 +547,14 @@ export default function App() {
       const canShare = typeof navAny?.share === "function";
 
       if (canShare && canShareFiles) {
-        await navAny.share({ title: "CatBTI", text: shareText, files: [file], url: shareUrl });
+        await navAny.share({ title: "CatBTI", text: t.shareText, files: [file], url: shareUrl });
         return;
       }
-
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(shareUrl);
         alert(t.copiedLink);
         return;
       }
-
       alert(`${t.copiedLink}\n\n${shareUrl}`);
     } catch (e) {
       console.error(e);
@@ -540,7 +564,7 @@ export default function App() {
     }
   };
 
-  // UI 스타일
+  // ── 스타일 ──────────────────────────────────────────────
   const bgStyle: React.CSSProperties = {
     minHeight: "100vh",
     display: "flex",
@@ -629,38 +653,31 @@ export default function App() {
   };
 
   const progressPct = Math.round(((Math.min(currentIndex + 1, questions.length)) / questions.length) * 100);
-
   const qPrompt = currentQ ? currentQ.prompt[lang] : "";
   const qOptions = currentQ ? currentQ.options[lang] : null;
 
   return (
     <div style={bgStyle}>
       <div style={cardStyle}>
+
+        {/* ── HOME ── */}
         {screen === "home" && (
           <>
             <div style={{ display: "flex", gap: 8, justifyContent: "center", marginBottom: 10 }}>
-              <button onClick={() => changeLang("ko")} style={langBtn(lang === "ko")}>
-                {t.langBtnKo}
-              </button>
-              <button onClick={() => changeLang("th")} style={langBtn(lang === "th")}>
-                {t.langBtnTh}
-              </button>
+              <button onClick={() => changeLang("ko")} style={langBtn(lang === "ko")}>{t.langBtnKo}</button>
+              <button onClick={() => changeLang("th")} style={langBtn(lang === "th")}>{t.langBtnTh}</button>
             </div>
-
             <img src={catHome} alt="cat home" style={imageStyle} />
             <h1 style={{ margin: 0, letterSpacing: -0.3 }}>{t.brandLine}</h1>
             <p style={{ marginTop: 10, marginBottom: 0, opacity: 0.82, fontSize: 14, lineHeight: 1.5 }}>{t.tagline}</p>
-
-            <button onClick={startQuiz} style={primaryBtn}>
-              {t.start}
-            </button>
+            <button onClick={startQuiz} style={primaryBtn}>{t.start}</button>
           </>
         )}
 
+        {/* ── QUIZ ── */}
         {screen === "quiz" && currentQ && qOptions && (
           <>
             <img src={catQuiz} alt="cat quiz" style={imageStyle} />
-
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
               <button
                 onClick={goPrev}
@@ -676,10 +693,7 @@ export default function App() {
               >
                 {t.prev}
               </button>
-
-              <div style={{ fontSize: 12, opacity: 0.7 }}>
-                {currentIndex + 1} / {questions.length}
-              </div>
+              <div style={{ fontSize: 12, opacity: 0.7 }}>{currentIndex + 1} / {questions.length}</div>
             </div>
 
             <div style={{ height: 8, background: "#eee", borderRadius: 999, overflow: "hidden", marginTop: 10 }}>
@@ -687,11 +701,8 @@ export default function App() {
             </div>
 
             <h2 style={{ marginTop: 16, marginBottom: 12, fontSize: 20, letterSpacing: -0.2, lineHeight: 1.35 }}>
-              {qPrompt.split("\n").map((line, idx) => (
-                <span key={idx}>
-                  {line}
-                  {idx < qPrompt.split("\n").length - 1 ? <br /> : null}
-                </span>
+              {qPrompt.split("\n").map((line, idx, arr) => (
+                <span key={idx}>{line}{idx < arr.length - 1 ? <br /> : null}</span>
               ))}
             </h2>
 
@@ -705,86 +716,53 @@ export default function App() {
                   onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
                   onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
                 >
-                  <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 4 }}>
-                    {t.choiceLabel} {idx + 1}
-                  </div>
+                  <div style={{ fontSize: 13, opacity: 0.6, marginBottom: 4 }}>{t.choiceLabel} {idx + 1}</div>
                   <div style={{ fontSize: 15, lineHeight: 1.35 }}>{txt}</div>
                 </button>
               ))}
             </div>
-
             <div style={{ marginTop: 10, fontSize: 12, opacity: 0.6 }}>{t.quizHint}</div>
           </>
         )}
 
+        {/* ── RESULT ── */}
         {screen === "done" && resultPack && (
           <>
             <div ref={shareCardRef} style={{ padding: 2 }}>
               <img src={catResult} alt="cat result" style={imageStyle} />
 
-              <div
-                style={{
-                  padding: 14,
-                  borderRadius: 16,
-                  background: "linear-gradient(135deg, rgba(255,231,240,0.9), rgba(231,240,255,0.9))",
-                  border: "1px solid rgba(255,255,255,0.9)",
-                  boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
-                }}
-              >
+              <div style={{
+                padding: 14,
+                borderRadius: 16,
+                background: "linear-gradient(135deg, rgba(255,231,240,0.9), rgba(231,240,255,0.9))",
+                border: "1px solid rgba(255,255,255,0.9)",
+                boxShadow: "0 10px 24px rgba(0,0,0,0.06)",
+              }}>
                 <div style={{ fontSize: 12, opacity: 0.75 }}>{t.resultLabel}</div>
                 <h2 style={{ margin: "8px 0 6px", letterSpacing: -0.3 }}>{resultPack.characterName[lang]}</h2>
-
-                <div
-                  style={{
-                    marginTop: 8,
-                    padding: "10px 12px",
-                    borderRadius: 14,
-                    background: "rgba(255,255,255,0.88)",
-                    fontSize: 14,
-                  }}
-                >
-                  “{resultPack.oneLiner[lang]}”
+                <div style={{ marginTop: 8, padding: "10px 12px", borderRadius: 14, background: "rgba(255,255,255,0.88)", fontSize: 14 }}>
+                  "{resultPack.oneLiner[lang]}"
                 </div>
-
                 <div style={{ marginTop: 10, display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center" }}>
-                  {resultPack.tags[lang].map((tag, i) => (
-                    <span key={i} style={chipStyle}>
-                      {tag}
-                    </span>
-                  ))}
+                  {resultPack.tags[lang].map((tag, i) => <span key={i} style={chipStyle}>{tag}</span>)}
                 </div>
-
                 <div style={{ marginTop: 12, textAlign: "left" }}>
                   <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 8 }}>{t.behaviorsTitle}</div>
                   <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                    {resultPack.behaviors[lang].map((b, idx) => (
-                      <li key={idx}>{b}</li>
-                    ))}
+                    {resultPack.behaviors[lang].map((b, idx) => <li key={idx}>{b}</li>)}
                   </ul>
                 </div>
-
                 <div style={{ marginTop: 12, opacity: 0.85, fontSize: 14, lineHeight: 1.55 }}>
-                  {resultPack.heart[lang].map((line, i) => (
-                    <div key={i}>{line}</div>
-                  ))}
+                  {resultPack.heart[lang].map((line, i) => <div key={i}>{line}</div>)}
                 </div>
               </div>
 
-              {/* ✅ 성향 요약: 기존 XX/20 제거 → 5개 아이콘 게이지로 변경 */}
+              {/* ✅ 성향 요약: 별 5개 게이지 */}
               <div style={{ marginTop: 14, textAlign: "left" }}>
                 <div style={{ fontSize: 13, opacity: 0.8, marginBottom: 10 }}>{t.traitSummary}</div>
-
                 <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                   {axisLevels.map((b) => (
-                    <div
-                      key={b.axis}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        gap: 12,
-                      }}
-                    >
+                    <div key={b.axis} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                       <div style={{ fontSize: 13, opacity: 0.85 }}>{axisLabel(b.axis, lang)}</div>
                       <Meter level={b.level} style={METER_STYLE} />
                     </div>
@@ -803,16 +781,11 @@ export default function App() {
               <div style={{ marginTop: 10, padding: 14, borderRadius: 16, border: "1px solid #eee", background: "rgba(255,255,255,0.86)", textAlign: "left" }}>
                 <div style={{ fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.butlerGuide}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                  {resultPack.guide[lang].map((g, idx) => (
-                    <li key={idx}>{g}</li>
-                  ))}
+                  {resultPack.guide[lang].map((g, idx) => <li key={idx}>{g}</li>)}
                 </ul>
-
                 <div style={{ marginTop: 12, fontSize: 13, opacity: 0.85, marginBottom: 8 }}>{t.caution}</div>
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.7, fontSize: 14 }}>
-                  {resultPack.caution[lang].map((c, idx) => (
-                    <li key={idx}>{c}</li>
-                  ))}
+                  {resultPack.caution[lang].map((c, idx) => <li key={idx}>{c}</li>)}
                 </ul>
               </div>
             )}
@@ -820,16 +793,13 @@ export default function App() {
             <button onClick={shareToFriends} style={primaryBtn} disabled={isSharing || isDownloading}>
               {isSharing ? t.sharePreparing : t.shareBtn}
             </button>
-
             <button onClick={downloadResultImage} style={secondaryBtn} disabled={isSharing || isDownloading}>
               {isDownloading ? t.downloadPreparing : t.downloadBtn}
             </button>
-
-            <button onClick={resetAll} style={secondaryBtn}>
-              {t.retry}
-            </button>
+            <button onClick={resetAll} style={secondaryBtn}>{t.retry}</button>
           </>
         )}
+
       </div>
     </div>
   );
