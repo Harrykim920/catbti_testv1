@@ -399,28 +399,34 @@ function getResultCode(scores: Record<Axis, number>): ResultCode {
   return (s + a + e) as ResultCode;
 }
 
+/** SVG 별 1개 — 텍스트/이모지 렌더링 문제 없음 */
+function StarIcon({ filled }: { filled: boolean }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill={filled ? "#f5a623" : "none"}
+      stroke={filled ? "#f5a623" : "#ccc"}
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      <polygon points="10,2 12.4,7.3 18.1,7.6 13.9,11.5 15.3,17.1 10,14 4.7,17.1 6.1,11.5 1.9,7.6 7.6,7.3" />
+    </svg>
+  );
+}
+
 function Meter({
   level,
-  style = "star",
 }: {
   level: number; // 1~5
-  style?: MeterStyle;
+  style?: MeterStyle; // 하위 호환용으로 남겨둠
 }) {
-  const filled = style === "star" ? "★" : "🐱";
-  const empty  = style === "star" ? "☆" : "🐾";
   return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center", justifyContent: "flex-end" }}>
+    <div style={{ display: "flex", gap: 3, alignItems: "center", justifyContent: "flex-end" }}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <span
-          key={i}
-          style={{
-            fontSize: 18,
-            lineHeight: 1,
-            color: i < level ? "#f5a623" : "#ddd",
-          }}
-        >
-          {i < level ? filled : empty}
-        </span>
+        <StarIcon key={i} filled={i < level} />
       ))}
     </div>
   );
